@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Shreehan Kate</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav>
+  <a class="nav-name" href="/">Shreehan Kate</a>
+  <ul class="nav-links">
+    <li><a href="/">Home</a></li>
+    <li><a href="/experience">Experience</a></li>
+    <li><a href="/research">Research</a></li>
+    <li><a href="/projects" class="active">Projects</a></li>
+    <li><a href="/publications">Papers</a></li>
+    <li><a href="/skills">Skills</a></li>
+  </ul>
+</nav>
+
+<main>
+  <div class="container">
+
+    <div class="page-header">
+      <p class="page-label">Built</p>
+      <h1 class="page-title">Projects</h1>
+      <hr class="page-divider">
+    </div>
+
+    <div class="project-list">
+
+      <div class="project-item">
+        <div class="project-top">
+          <span class="project-title">RL Framework for Adaptive Control of Quadrotor UAVs</span>
+          <span class="project-date">May – Aug 2025</span>
+        </div>
+        <p class="project-desc">Developed and trained actor-critic TD3 and DDPG algorithms for dynamic adjustment of controller gains in a Quadrotor UAV simulation. Devised a reward function based on LQG cost to guide the agent towards optimal performance through iterative learning. Exhibited disturbance rejection under external perturbations. Achieved 60% lower cumulative tracking error (IAE, ISE) compared to fixed-gain and model-based controllers including PID, LQR, and LMPC.</p>
+        <div class="project-tags">
+          <span class="tag">TD3</span><span class="tag">DDPG</span><span class="tag">PyTorch</span>
+          <span class="tag">LQG</span><span class="tag">Quadrotor</span><span class="tag">MuJoCo</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-top">
+          <span class="project-title">Nonlinear Control of Cruise Missiles using Fuzzy-Tuned LQR</span>
+          <span class="project-date">Mar – Jun 2024</span>
+        </div>
+        <p class="project-desc">Derived a quasi-linearized fourth-order inner loop model from a nonlinear longitudinal missile autopilot using Feedback Linearization. Designed a Mamdani Type-1 fuzzy inference system in MATLAB for online adaptation of LQR weights (Q and R) in response to varying trajectories. Enhanced autopilot robustness by 28.92% compared to offline tuning approaches.</p>
+        <div class="project-tags">
+          <span class="tag">Feedback Linearization</span><span class="tag">LQR</span>
+          <span class="tag">Fuzzy Logic</span><span class="tag">MATLAB</span><span class="tag">Simulink</span>
+        </div>
+      </div>
+
+      <div class="project-item">
+        <div class="project-top">
+          <span class="project-title">All-Terrain Vehicle — Suspension &amp; Steering Design</span>
+          <span class="project-date">Aug 2023 – Jan 2024</span>
+        </div>
+        <p class="project-desc">Engineered and validated the complete suspension and steering systems for an ATV build. Achieved track width reductions of 3.77% (front) and 2.13% (rear). Designed custom mounts and gussets in AutoCAD to ensure structural integrity and secure integration of the engine, shocks, and suspension arms.</p>
+        <div class="project-tags">
+          <span class="tag">AutoCAD</span><span class="tag">Vehicle Dynamics</span>
+          <span class="tag">Suspension Design</span><span class="tag">Fabrication</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<footer>Shreehan Santosh Kate &nbsp;·&nbsp; NIT Trichy &nbsp;·&nbsp; shreehan1912@gmail.com</footer>
+</body>
+</html>
