@@ -392,6 +392,11 @@ h2 em, h1 span{ font-style: normal; color: var(--accent); }
 .award h3{ font-size: 1.04rem; margin-bottom: 6px; font-weight: 500; }
 .award-org{ font-family: var(--mono); font-size: 0.82rem; color: var(--ink-soft); }
 .award-note{ font-size: 0.9rem; color: var(--ink-soft); margin-top: 8px; max-width: 68ch; }
+.award-link{
+  display: inline-block; margin-top: 12px; font-family: var(--mono); font-size: 0.78rem;
+  color: var(--accent); border-bottom: 1px solid transparent; transition: border-color .2s;
+}
+.award-link:hover{ border-color: var(--accent); }
 
 /* ============== PUBLICATIONS ============== */
 .pub-list{ display: flex; flex-direction: column; gap: 18px; }
