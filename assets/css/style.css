@@ -258,20 +258,41 @@ html:not(.js) .telemetry, html:not(.js) .hero-hint, html:not(.js) .rail{ display
   .hint-desk{ display: none; }
   .hint-touch{ display: inline; }
 }
+.arm-stage{ display: none; }
 @media (max-width: 860px){
-  .hero{ align-items: flex-start; }
-  .hero-content{ padding-top: 100px; padding-bottom: 300px; }
+  /* Mobile: the arm lives in a framed stage instead of floating in the hero */
+  .arm-stage{
+    display: block; position: absolute; z-index: 0; pointer-events: none; /* under the canvas */
+    left: var(--edge); right: var(--edge); bottom: 60px; height: 300px;
+    border: 1px solid var(--line-2); border-radius: 14px;
+    background:
+      linear-gradient(var(--sig), var(--sig)) top 10px left 10px / 14px 1px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) top 10px left 10px / 1px 14px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) top 10px right 10px / 14px 1px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) top 10px right 10px / 1px 14px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) bottom 10px left 10px / 14px 1px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) bottom 10px left 10px / 1px 14px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) bottom 10px right 10px / 14px 1px no-repeat,
+      linear-gradient(var(--sig), var(--sig)) bottom 10px right 10px / 1px 14px no-repeat,
+      radial-gradient(ellipse 70% 60% at 50% 90%, rgba(92,225,230,0.07), transparent 70%),
+      rgba(10,12,16,0.55);
+  }
+  .arm-canvas{ z-index: 1; }
+  .hero{ align-items: flex-start; min-height: 0; } /* size to content: no dead gap above the stage */
+  .hero-content{ padding-top: 100px; padding-bottom: 390px; }
   .kicker{ font-size: 0.64rem; letter-spacing: 0.1em; margin-bottom: 1.2rem; }
   .hero-sub{ font-size: 0.9rem; }
   .hero-meta{ font-size: 0.74rem; margin-bottom: 1.6rem; }
   .hero-links .btn{ padding: 10px 14px; font-size: 0.78rem; }
   .telemetry{
-    top: auto; bottom: 64px; left: auto; right: var(--edge); width: auto;
+    /* pinned to the stage's top-left corner */
+    top: auto; bottom: calc(60px + 300px - 12px - 30px); left: calc(var(--edge) + 12px); right: auto; width: auto;
+    background: transparent; border: 0; backdrop-filter: none;
     padding: 7px 10px; font-size: 0.62rem; display: flex; align-items: center; gap: 10px;
   }
   .telemetry .tm-sub, .telemetry dl{ display: none; }
   .telemetry .tm-state{ margin: 0; padding: 3px 6px; }
-  .hero-hint{ bottom: 18px; font-size: 0.66rem; }
+  .hero-hint{ bottom: 18px; font-size: 0.66rem; border: 0; background: transparent; padding: 6px 2px; }
 }
 
 /* ============== SECTIONS / CHAPTER HEADS ============== */

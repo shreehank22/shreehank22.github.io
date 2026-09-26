@@ -189,7 +189,7 @@
     const EPS = 0.12, LMAX = 0.10, STEP = 0.06, K0 = 0.03, QLIM = 2.3; // ±132°: links can't fold back over each other
 
     const SIG = '92,225,230', AMB = '255,181,71';
-    let W = 0, H = 0, R = 1, base = { x: 0, y: 0 }, mobile = false;
+    let W = 0, H = 0, R = 1, base = { x: 0, y: 0 }, mobile = false, stageRect = null;
     let goal = { x: -0.15, y: -0.6 };     // desired (pointer or idle path)
     let tgt = { x: -0.15, y: -0.6 };      // smoothed target the solver sees
     let lastPointer = -1e9;
@@ -206,14 +206,25 @@
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       mobile = W < 860;
-      if (mobile) { base = { x: W * 0.3, y: H - 76 }; R = Math.min(260, W * 0.56, H * 0.32); }
+      stageRect = null;
+      const st = document.getElementById('arm-stage');
+      if (mobile && st && st.offsetParent !== null) {
+        const s = st.getBoundingClientRect();
+        stageRect = { x: s.left - r.left, y: s.top - r.top, w: s.width, h: s.height };
+        base = { x: stageRect.x + stageRect.w * 0.5, y: stageRect.y + stageRect.h - 34 };
+        R = Math.min(240, stageRect.h - 70, stageRect.w * 0.62);
+      } else if (mobile) { base = { x: W * 0.3, y: H - 76 }; R = Math.min(260, W * 0.56, H * 0.32); }
       else { base = { x: W * 0.72, y: H * 0.95 }; R = Math.min(H * 0.68, W * 0.36); }
     }
 
     function setGoalFromClient(cx, cy) {
       const r = canvas.getBoundingClientRect();
       if (cy < r.top || cy > r.bottom) return;
-      goal = { x: (cx - r.left - base.x) / R, y: (cy - r.top - base.y) / R };
+      if (stageRect) { // mobile: only taps inside the stage steer the arm
+        const lx = cx - r.left, ly = cy - r.top;
+        if (lx < stageRect.x || lx > stageRect.x + stageRect.w || ly < stageRect.y || ly > stageRect.y + stageRect.h) return;
+      }
+      goal ={ x: (cx - r.left - base.x) / R, y: (cy - r.top - base.y) / R };
       lastPointer = performance.now();
     }
     addEventListener('pointermove', e => setGoalFromClient(e.clientX, e.clientY), { passive: true });
@@ -292,7 +303,14 @@
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-      const warn = stats.dist > 0.995 || stats.kappa > 22;
+      ctx.save();
+      if (stageRect) { // confine the arm to its stage on mobile
+        ctx.beginPath();
+        if (ctx.roundRect) ctx.roundRect(stageRect.x + 1, stageRect.y + 1, stageRect.w - 2, stageRect.h - 2, 13);
+        else ctx.rect(stageRect.x + 1, stageRect.y + 1, stageRect.w - 2, stageRect.h - 2);
+        ctx.clip();
+      }
+      const warn =stats.dist > 0.995 || stats.kappa > 22;
       const col = warn ? AMB : SIG;
 
       // workspace boundary ∂W: |p| = ΣLᵢ
@@ -378,6 +396,7 @@
         ctx.font = '10px "JetBrains Mono", monospace'; ctx.fillStyle = 'rgba(' + col + ',0.85)'; ctx.textAlign = 'left';
         ctx.fillText('x_d', tx + 15, ty - 13);
       }
+      ctx.restore();
     }
 
     function arrow(x1, y1, x2, y2) {
@@ -426,6 +445,8 @@
 
     resize();
     addEventListener('resize', resize);
+    // hero height changes when web fonts load / mobile toolbars collapse
+    if ('ResizeObserver' in window) new ResizeObserver(() => resize()).observe(hero);
     // converge to the initial goal before the first paint
     for (let k = 0; k < 60; k++) stats = solve();
 
