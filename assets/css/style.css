@@ -470,19 +470,34 @@ h1, h2, h3, h4{ font-family: var(--display); font-weight: 600; letter-spacing: -
 @media (max-width: 720px){ .project-grid{ grid-template-columns: 1fr; } }
 
 /* ============== SKILLS ============== */
-.skills-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px 52px; }
+.skills-grid{ display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; align-items: start; }
+.skill-group{ padding: 30px 32px; position: relative; overflow: hidden; }
+.skill-group::before{
+  content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--grad);
+  opacity: 0; transition: opacity .25s ease;
+}
+.skill-group:hover::before{ opacity: 1; }
+.skill-index{
+  display: block; font-family: var(--mono); font-size: 0.72rem; color: var(--ink-faint);
+  letter-spacing: 0.06em; margin-bottom: 10px;
+}
 .skill-group h4{
-  font-family: var(--mono); font-size: 0.78rem; text-transform: uppercase;
-  letter-spacing: 0.07em; color: var(--ink-faint); font-weight: 500; margin-bottom: 16px;
+  font-family: var(--display); font-size: 1.1rem; font-weight: 600;
+  letter-spacing: -0.01em; color: var(--ink); margin-bottom: 18px;
 }
 .tags{ display: flex; flex-wrap: wrap; gap: 9px; }
 .tags span{
-  font-size: 0.85rem; padding: 8px 15px; border: 1px solid var(--line);
+  position: relative;
+  font-size: 0.85rem; padding: 8px 15px 8px 26px; border: 1px solid var(--line);
   border-radius: 100px; background: var(--bg);
-  transition: border-color .2s, color .2s, transform .2s;
+  transition: border-color .2s, color .2s, transform .2s, background .2s;
 }
-.section.alt .tags span{ background: var(--surface); }
-.tags span:hover{ border-color: var(--violet); color: var(--violet); transform: translateY(-2px); }
+.tags span::before{
+  content: ""; position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 5px; height: 5px; border-radius: 50%; background: var(--grad);
+}
+.section.alt .tags span{ background: var(--surface-2); }
+.tags span:hover{ border-color: var(--violet); color: var(--violet); transform: translateY(-2px); background: var(--grad-soft); }
 
 @media (max-width: 700px){ .skills-grid{ grid-template-columns: 1fr; } }
 
