@@ -206,6 +206,11 @@ h1, h2, h3, h4{ font-family: var(--display); font-weight: 600; letter-spacing: -
 .h1-2{
   color: transparent; -webkit-text-stroke: 1.2px var(--ink);
 }
+.hero-hello{
+  font-family: var(--display); font-size: clamp(1.1rem, 1.9vw, 1.45rem); line-height: 1.35;
+  letter-spacing: -0.01em; color: var(--ink-2); margin-bottom: 1.4rem; max-width: 34ch;
+}
+@media (max-width: 860px){ .hero-hello{ font-size: 1.05rem; margin-bottom: 1.1rem; } }
 .hero-sub{ font-family: var(--mono); font-size: clamp(0.95rem, 1.4vw, 1.1rem); color: var(--ink); margin-bottom: 0.5rem; }
 .hero-sub i{ font-style: normal; color: var(--sig); padding: 0 6px; }
 .hero-meta{ font-family: var(--mono); font-size: 0.8rem; color: var(--ink-2); margin-bottom: 2.2rem; }
