@@ -186,7 +186,7 @@
     const N = L.length;
     const qRest = [-1.75, 0.55, 0.55, 0.45];
     const q = qRest.slice();
-    const EPS = 0.12, LMAX = 0.10, STEP = 0.06, K0 = 0.03, QLIM = 2.7;
+    const EPS = 0.12, LMAX = 0.10, STEP = 0.06, K0 = 0.03, QLIM = 2.3; // ±132°: links can't fold back over each other
 
     const SIG = '92,225,230', AMB = '255,181,71';
     let W = 0, H = 0, R = 1, base = { x: 0, y: 0 }, mobile = false;
@@ -206,7 +206,7 @@
       canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       mobile = W < 860;
-      if (mobile) { base = { x: W * 0.4, y: H - 58 }; R = Math.min(260, W * 0.56, H * 0.32); }
+      if (mobile) { base = { x: W * 0.3, y: H - 76 }; R = Math.min(260, W * 0.56, H * 0.32); }
       else { base = { x: W * 0.72, y: H * 0.95 }; R = Math.min(H * 0.68, W * 0.36); }
     }
 
@@ -232,28 +232,55 @@
       const en = Math.hypot(ex, ey);
       if (en > STEP) { ex *= STEP / en; ey *= STEP / en; }
 
-      // A = J Jᵀ (2×2) and its singular values
-      let a11 = 0, a12 = 0, a22 = 0;
-      for (let i = 0; i < N; i++) { a11 += J0[i] * J0[i]; a12 += J0[i] * J1[i]; a22 += J1[i] * J1[i]; }
-      const tr = a11 + a22, det = a11 * a22 - a12 * a12;
-      const disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
-      const smax = Math.sqrt(tr / 2 + disc), smin = Math.sqrt(Math.max(0, tr / 2 - disc));
+      // Singular values of the full J (reported: w, κ)
+      const sv = (A0, A1) => {
+        let a11 = 0, a12 = 0, a22 = 0;
+        for (let i = 0; i < N; i++) { a11 += A0[i] * A0[i]; a12 += A0[i] * A1[i]; a22 += A1[i] * A1[i]; }
+        const tr = a11 + a22, det = a11 * a22 - a12 * a12;
+        const disc = Math.sqrt(Math.max(0, tr * tr / 4 - det));
+        return { a11, a12, a22, det, smax: Math.sqrt(tr / 2 + disc), smin: Math.sqrt(Math.max(0, tr / 2 - disc)) };
+      };
+      const full = sv(J0, J1);
 
-      let lam2 = smin < EPS ? LMAX * LMAX * (1 - (smin / EPS) ** 2) : 0;
-      lam2 += 1e-8;
-      const m11 = a11 + lam2, m22 = a22 + lam2, d = m11 * m22 - a12 * a12;
-      const i11 = m22 / d, i12 = -a12 / d, i22 = m11 / d;
-
-      // J# = Jᵀ M ; task step ; null-space posture step
-      const g = new Array(N);
-      let Jg0 = 0, Jg1 = 0;
-      for (let i = 0; i < N; i++) { g[i] = -K0 * (q[i] - qRest[i]); Jg0 += J0[i] * g[i]; Jg1 += J1[i] * g[i]; }
-      for (let i = 0; i < N; i++) {
-        const s0 = J0[i] * i11 + J1[i] * i12, s1 = J0[i] * i12 + J1[i] * i22;
-        q[i] += s0 * ex + s1 * ey + g[i] - (s0 * Jg0 + s1 * Jg1);
-        if (i > 0) q[i] = clamp(q[i], -QLIM, QLIM);
+      // Saturation handling: a joint at its limit whose step would push it
+      // further out is removed from the task (its Jacobian column zeroed) and
+      // the step is recomputed. It then lives entirely in the null space, where
+      // the posture term pulls it back off the limit. Clamping after the fact
+      // instead leaves the arm stuck in a folded local minimum.
+      const active = new Array(N).fill(true);
+      const dq = new Array(N);
+      let lam2 = 0;
+      for (let pass = 0; pass < N; pass++) {
+        const A0 = J0.map((v, i) => active[i] ? v : 0), A1 = J1.map((v, i) => active[i] ? v : 0);
+        const m = sv(A0, A1);
+        lam2 = (m.smin < EPS ? LMAX * LMAX * (1 - (m.smin / EPS) ** 2) : 0) + 1e-8;
+        const m11 = m.a11 + lam2, m22 = m.a22 + lam2, d = m11 * m22 - m.a12 * m.a12;
+        const i11 = m22 / d, i12 = -m.a12 / d, i22 = m11 / d;
+        // Δq = J# e + (I − J# J) g ,  J# = Jᵀ (J Jᵀ + λ² I)⁻¹
+        const g = q.map((qi, i) => -K0 * (qi - qRest[i]));
+        let Jg0 = 0, Jg1 = 0;
+        for (let i = 0; i < N; i++) { Jg0 += A0[i] * g[i]; Jg1 += A1[i] * g[i]; }
+        for (let i = 0; i < N; i++) {
+          const s0 = A0[i] * i11 + A1[i] * i12, s1 = A0[i] * i12 + A1[i] * i22;
+          dq[i] = s0 * ex + s1 * ey + g[i] - (s0 * Jg0 + s1 * Jg1);
+        }
+        let changed = false;
+        for (let i = 1; i < N; i++) {
+          if (active[i] && Math.abs(q[i] + dq[i]) > QLIM && Math.sign(dq[i]) === Math.sign(q[i])) { active[i] = false; changed = true; }
+        }
+        if (!changed) break;
       }
-      return { en, w: Math.sqrt(Math.max(det, 0)), kappa: smin > 1e-9 ? smax / smin : Infinity, lam: Math.sqrt(lam2), dist: Math.hypot(tgt.x, tgt.y), px, py };
+      let limited = false;
+      for (let i = 0; i < N; i++) {
+        q[i] += dq[i];
+        if (i > 0) { const c2 = clamp(q[i], -QLIM, QLIM); if (c2 !== q[i]) limited = true; q[i] = c2; }
+        if (!active[i]) limited = true;
+      }
+      return {
+        en, w: Math.sqrt(Math.max(full.det, 0)),
+        kappa: full.smin > 1e-9 ? full.smax / full.smin : Infinity,
+        lam: Math.sqrt(lam2), dist: Math.hypot(tgt.x, tgt.y), limited
+      };
     }
 
     function joints() {
@@ -374,6 +401,7 @@
       tm.l.textContent = stats.lam < 1e-3 ? '0' : stats.lam.toFixed(4);
       let s = 'TRACKING', warn = false;
       if (stats.dist > 0.995) { s = 'OUT OF REACH · DAMPED'; warn = true; }
+      else if (stats.limited && stats.en > 0.01) { s = 'JOINT LIMIT'; warn = true; }
       else if (stats.kappa > 22) { s = 'NEAR SINGULAR'; warn = true; }
       else if (stats.en < 0.004) { s = 'CONVERGED'; }
       tm.state.textContent = s;

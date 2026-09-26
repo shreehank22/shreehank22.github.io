@@ -237,8 +237,10 @@ h1, h2, h3, h4{ font-family: var(--display); font-weight: 600; letter-spacing: -
 .tm-state.warn{ background: var(--amber-2); color: var(--amber); border-color: rgba(255,181,71,0.35); }
 
 .hero-hint{
-  position: absolute; z-index: 3; left: 50%; bottom: 28px; transform: translateX(-50%);
-  display: flex; align-items: center; gap: 10px; width: max-content; max-width: calc(100% - 2*var(--edge));
+  /* left-aligned with the text column so it never runs under the arm's base */
+  position: absolute; z-index: 3; bottom: 28px;
+  left: max(var(--edge), calc((100% - var(--max)) / 2 + var(--edge)));
+  display: flex; align-items: center; gap: 10px; width: max-content; max-width: min(440px, calc(100% - 2*var(--edge)));
   font-family: var(--mono); font-size: 0.72rem; color: var(--ink-3);
   padding: 8px 14px; border: 1px solid var(--line); border-radius: 100px; background: rgba(7,8,10,0.6);
 }
