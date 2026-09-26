@@ -70,6 +70,8 @@
     const tlFill = document.getElementById('tl-fill');
     const logs = tl ? Array.from(tl.querySelectorAll('.log')) : [];
     const heroContent = document.getElementById('hero-content');
+    const heroHint = document.querySelector('.hero-hint');
+    const telemetry = document.querySelector('.telemetry');
 
     let current = '';
     let ticking = false;
@@ -100,10 +102,15 @@
         logs.forEach(l => l.classList.toggle('passed', l.getBoundingClientRect().top + 40 < mid));
       }
 
+      // Hero exit: text drifts *up* (never down into the bottom-anchored hint
+      // and arm base) and fades; the hint and telemetry fade out quickly.
       if (heroContent && !reduced) {
-        const k = clamp(y / (innerHeight * 0.9), 0, 1);
-        heroContent.style.transform = 'translate3d(0,' + (y * 0.25).toFixed(1) + 'px,0)';
-        heroContent.style.opacity = (1 - k * 0.9).toFixed(3);
+        const k = clamp(y / (innerHeight * 0.7), 0, 1);
+        heroContent.style.transform = 'translate3d(0,' + (-y * 0.12).toFixed(1) + 'px,0)';
+        heroContent.style.opacity = (1 - k).toFixed(3);
+        const q = clamp(1 - y / (innerHeight * 0.25), 0, 1).toFixed(3);
+        if (heroHint) heroHint.style.opacity = q;
+        if (telemetry) telemetry.style.opacity = clamp(1 - y / (innerHeight * 0.5), 0, 1).toFixed(3);
       }
     }
 
