@@ -1,17 +1,25 @@
 // Lightweight scroll-reveal — no dependencies.
 document.addEventListener('DOMContentLoaded', () => {
-  const targets = document.querySelectorAll('.reveal');
+  // Elements are marked with the inert ".reveal-target" class in the HTML.
+  // We add the animating ".reveal" class here, in JS, rather than baking it
+  // into the markup — so if this script ever fails to run (blocked, errors
+  // out, races with paint), content stays visible instead of stuck hidden.
+  const targets = document.querySelectorAll('.reveal-target');
 
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('in');
-        io.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  if ('IntersectionObserver' in window) {
+    targets.forEach(el => el.classList.add('reveal'));
 
-  targets.forEach(el => io.observe(el));
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+    targets.forEach(el => io.observe(el));
+  }
 
   // Dark mode toggle. Initial theme is already set inline in <head> to avoid flash.
   const toggle = document.getElementById('theme-toggle');
