@@ -346,22 +346,9 @@ section{ scroll-margin-top: 64px; }
 .aff-badge:hover{ transform: translateY(-3px); box-shadow: 0 0 0 2px var(--sig); }
 .aff-badge img{ max-width: 100%; max-height: 100%; object-fit: contain; }
 
-.stats{
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: clamp(48px, 7vw, 80px);
-  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
-}
-.stat{ padding: 28px 24px 28px 0; }
-.stat + .stat{ padding-left: 24px; border-left: 1px solid var(--line); }
-.stat b{ display: block; font-family: var(--display); font-weight: 700; font-size: clamp(2.2rem, 4vw, 3.2rem); letter-spacing: -0.04em; line-height: 1; color: var(--ink); }
-.stat b small{ font-size: 0.42em; color: var(--sig); margin-left: 4px; letter-spacing: 0; }
-.stat span{ display: block; margin-top: 10px; font-size: 0.82rem; color: var(--ink-2); line-height: 1.5; }
-
 @media (max-width: 860px){
   .operator-grid{ grid-template-columns: minmax(0, 1fr); }
   .op-photo{ max-width: 300px; }
-  .stats{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .stat:nth-child(3){ padding-left: 0; border-left: 0; }
-  .stat:nth-child(n+3){ border-top: 1px solid var(--line); }
 }
 
 /* ============== 01 EXPERIENCE: trajectory timeline ============== */
