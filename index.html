@@ -7,7 +7,7 @@
 <meta name="description" content="Shreehan Santosh Kate. Control theory, optimization, and learning for robotic manipulators. Incoming MS Robotics Engineering, WPI.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
@@ -21,25 +21,12 @@
 
 <div class="grain"></div>
 
-<!-- Trajectory rail: scroll progress as a literal tracked path, with waypoints per section -->
-<nav class="traj-rail" aria-hidden="true">
-  <div class="traj-track"></div>
-  <div class="traj-fill" id="traj-fill"></div>
-  <div class="traj-dots" id="traj-dots">
-    <a href="#home" class="traj-dot" data-target="home"><span class="traj-tip">Home</span></a>
-    <a href="#education" class="traj-dot" data-target="education"><span class="traj-tip">Education</span></a>
-    <a href="#awards" class="traj-dot" data-target="awards"><span class="traj-tip">Awards</span></a>
-    <a href="#experience" class="traj-dot" data-target="experience"><span class="traj-tip">Experience</span></a>
-    <a href="#publications" class="traj-dot" data-target="publications"><span class="traj-tip">Publications</span></a>
-    <a href="#projects" class="traj-dot" data-target="projects"><span class="traj-tip">Projects</span></a>
-    <a href="#skills" class="traj-dot" data-target="skills"><span class="traj-tip">Skills</span></a>
-    <a href="#contact" class="traj-dot" data-target="contact"><span class="traj-tip">Contact</span></a>
-  </div>
-</nav>
+<!-- Scroll progress signal -->
+<div class="signal-bar" aria-hidden="true"><div class="signal-fill" id="signal-fill"></div></div>
 
 <nav id="nav">
   <div class="nav-inner">
-    <a href="#home" class="nav-mark">SSK</a>
+    <a href="#home" class="nav-mark"><span class="dot"></span>Shreehan Kate</a>
     <div class="nav-links">
       <a href="#education">Education</a>
       <a href="#awards">Awards</a>
@@ -60,10 +47,6 @@
       </button>
     </div>
   </div>
-  <div class="traj-rail-mobile" aria-hidden="true">
-    <div class="traj-track-h"></div>
-    <div class="traj-fill-h" id="traj-fill-h"></div>
-  </div>
 </nav>
 
 <div class="mobile-menu-backdrop" id="mobile-menu-backdrop"></div>
@@ -82,10 +65,11 @@
 
 <!-- ===================== HERO ===================== -->
 <header id="home" class="hero">
+  <div class="hero-glow" aria-hidden="true"></div>
   <svg class="hero-grid" viewBox="0 0 1200 800" preserveAspectRatio="none" aria-hidden="true">
     <defs>
-      <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-        <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="0.5"/>
+      <pattern id="grid" width="44" height="44" patternUnits="userSpaceOnUse">
+        <path d="M 44 0 L 0 0 0 44" fill="none" stroke="currentColor" stroke-width="0.5"/>
       </pattern>
     </defs>
     <rect width="1200" height="800" fill="url(#grid)"/>
@@ -93,16 +77,17 @@
 
   <div class="hero-inner">
     <div class="hero-text">
-      <h1>Shreehan<br><span>Santosh Kate</span></h1>
-      <p class="hero-sub">Control Theory, Optimization, Learning.</p>
-      <p class="hero-desc">I work on the <strong>kinematics, dynamics, and control of robotic manipulators and aerial systems</strong>, from link length optimization of redundant arms to compliant manipulation on the Franka Emika Panda. I'm graduating from NIT Tiruchirappalli and heading into a Master's in Robotics Engineering at WPI, working toward a PhD in manipulation and whole body control.</p>
+      <span class="hero-kicker reveal"><span class="dot"></span>Open to Spring/Summer 2027 robotics roles</span>
+      <h1 class="reveal"><span>Shreehan</span><span class="grad-text">Santosh Kate</span></h1>
+      <p class="hero-sub reveal">Control theory <b>·</b> Optimization <b>·</b> Learning, for robotic manipulators.</p>
+      <p class="hero-desc reveal">I work on the <strong>kinematics, dynamics, and control of robotic manipulators and aerial systems</strong>, from link length optimization of redundant arms to compliant manipulation on the Franka Emika Panda. I'm graduating from NIT Tiruchirappalli and heading into a Master's in Robotics Engineering at WPI, working toward a PhD in manipulation and whole body control.</p>
 
-      <div class="hero-links">
-        <a href="https://www.linkedin.com/in/shreehankate" target="_blank" rel="noopener">LinkedIn ↗</a>
-        <a href="mailto:shreehan1912@gmail.com">Email ↗</a>
+      <div class="hero-links reveal">
+        <a href="mailto:shreehan1912@gmail.com" class="primary">Email me ↗</a>
+        <a href="https://www.linkedin.com/in/shreehankate" target="_blank" rel="noopener" class="ghost">LinkedIn ↗</a>
       </div>
 
-      <div class="hero-affiliations">
+      <div class="hero-affiliations reveal">
         <span class="aff-label">Worked &amp; studied with</span>
         <div class="aff-logos">
           <span class="aff-badge"><img src="assets/images/wpi-logo.png" alt="Worcester Polytechnic Institute"></span>
@@ -115,7 +100,7 @@
       </div>
     </div>
 
-    <div class="hero-photo">
+    <div class="hero-photo reveal">
       <div class="photo-frame">
         <img src="assets/images/hero.jpg" alt="Shreehan Santosh Kate">
       </div>
@@ -126,34 +111,38 @@
 <!-- ===================== EDUCATION ===================== -->
 <section id="education" class="section">
   <div class="section-inner">
-    <p class="eyebrow">Academic Background</p>
-    <h2>Education</h2>
+    <p class="eyebrow"><span class="num">01</span>Academic Background</p>
+    <div class="section-head"><h2>Education</h2></div>
 
     <div class="edu-grid">
-      <div class="edu-card elevated">
-        <div class="edu-logo">
-          <img src="assets/images/wpi-logo.png" alt="Worcester Polytechnic Institute logo"
-               onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'edu-logo-fallback',textContent:'WPI'}));">
+      <div class="edu-card elevated reveal">
+        <div class="edu-top">
+          <div class="edu-logo">
+            <img src="assets/images/wpi-logo.png" alt="Worcester Polytechnic Institute logo"
+                 onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'edu-logo-fallback',textContent:'WPI'}));">
+          </div>
+          <div class="edu-info">
+            <span class="edu-date">FALL 2026 — PRESENT</span>
+            <h3>Master's in Robotics Engineering</h3>
+          </div>
         </div>
-        <div class="edu-info">
-          <span class="edu-date">FALL 2026 — PRESENT</span>
-          <h3>Master's in Robotics Engineering</h3>
-          <p class="edu-org">Worcester Polytechnic Institute · Worcester, MA</p>
-          <p class="edu-note">Fall 2026 coursework: Vision-based Robotic Manipulation, Robot Control<br>Directed Research at the Manipulation and Environmental Robotics Lab</p>
-        </div>
+        <p class="edu-org">Worcester Polytechnic Institute · Worcester, MA</p>
+        <p class="edu-note">Fall 2026 coursework: Vision-based Robotic Manipulation, Robot Control<br>Directed Research at the Manipulation and Environmental Robotics Lab</p>
       </div>
 
-      <div class="edu-card elevated">
-        <div class="edu-logo">
-          <img src="assets/images/nitt-logo.png" alt="National Institute of Technology, Tiruchirappalli logo"
-               onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'edu-logo-fallback',textContent:'NITT'}));">
+      <div class="edu-card elevated reveal">
+        <div class="edu-top">
+          <div class="edu-logo">
+            <img src="assets/images/nitt-logo.png" alt="National Institute of Technology, Tiruchirappalli logo"
+                 onerror="this.onerror=null;this.replaceWith(Object.assign(document.createElement('div'),{className:'edu-logo-fallback',textContent:'NITT'}));">
+          </div>
+          <div class="edu-info">
+            <span class="edu-date">NOV 2022 — MAY 2026</span>
+            <h3>B.Tech, Instrumentation &amp; Control Engineering</h3>
+          </div>
         </div>
-        <div class="edu-info">
-          <span class="edu-date">NOV 2022 — MAY 2026</span>
-          <h3>B.Tech, Instrumentation &amp; Control Engineering</h3>
-          <p class="edu-org">National Institute of Technology, Tiruchirappalli · CGPA 8/10</p>
-          <p class="edu-note">NITT Undergraduate STEM Research Fellowship Awardee.</p>
-        </div>
+        <p class="edu-org">National Institute of Technology, Tiruchirappalli · CGPA 8/10</p>
+        <p class="edu-note">NITT Undergraduate STEM Research Fellowship Awardee.</p>
       </div>
     </div>
   </div>
@@ -162,24 +151,24 @@
 <!-- ===================== AWARDS & CERTIFICATIONS ===================== -->
 <section id="awards" class="section alt">
   <div class="section-inner">
-    <p class="eyebrow">Recognition</p>
-    <h2>Awards &amp; Certifications</h2>
+    <p class="eyebrow"><span class="num">02</span>Recognition</p>
+    <div class="section-head"><h2>Awards &amp; <span class="grad-text">Certifications</span></h2></div>
 
     <div class="award-list">
-      <div class="award elevated">
+      <div class="award elevated reveal">
         <span class="award-tag">Award</span>
         <h3>NITT Undergraduate STEM Research Fellowship</h3>
         <p class="award-org">Top Merit Award · RECAL, The Alumni Association of NIT Trichy</p>
         <p class="award-note">Awarded a research grant of ₹70,000 for a proposal on adaptive reinforcement learning for predictive control of autonomous quadrotor systems.</p>
         <a href="https://drive.google.com/file/d/1CDEIgxMi3UqPbBfJtQ2bJ3idN0iI2bEj/view" target="_blank" rel="noopener" class="award-link">View certificate ↗</a>
       </div>
-      <div class="award elevated">
+      <div class="award elevated reveal">
         <span class="award-tag">Certification</span>
         <h3>Reinforcement Learning</h3>
         <p class="award-org">NPTEL · IIT Madras, Instructor: Dr. B. Ravindran</p>
         <a href="https://drive.google.com/file/d/1iGZ12EwB8MqOsmvLZLlQpXlCoLKOAzQ9/view" target="_blank" rel="noopener" class="award-link">View certificate ↗</a>
       </div>
-      <div class="award elevated">
+      <div class="award elevated reveal">
         <span class="award-tag">Certification</span>
         <h3>Drone Systems and Control</h3>
         <p class="award-org">NPTEL · IISc Bangalore, Instructor: Dr. Suresh Sundaram</p>
@@ -192,12 +181,12 @@
 <!-- ===================== EXPERIENCE ===================== -->
 <section id="experience" class="section">
   <div class="section-inner">
-    <p class="eyebrow">Research &amp; Work</p>
-    <h2>Experience</h2>
+    <p class="eyebrow"><span class="num">03</span>Research &amp; Work</p>
+    <div class="section-head"><h2>Experience</h2></div>
 
     <div class="timeline">
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">
           AUG 2026 — Present
           <div class="t-logos"><span class="t-logo-badge"><img src="assets/images/wpi-logo.png" alt="WPI logo"></span></div>
@@ -211,7 +200,7 @@
         </div>
         </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">
           JAN 2026 — MAY 2026
           <div class="t-logos"><span class="t-logo-badge"><img src="assets/images/xterra-logo.png" alt="xTerra Robotics logo"></span></div>
@@ -229,7 +218,7 @@
         </div>
       </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">
           JAN 2026 — MAY 2026
           <div class="t-logos">
@@ -251,7 +240,7 @@
         </div>
       </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">MAY 2025 — AUG 2025</div>
         <div class="t-content">
           <h3>Research Intern</h3>
@@ -265,7 +254,7 @@
         </div>
       </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">MAR 2025 — JUL 2025</div>
         <div class="t-content">
           <h3>Project Intern</h3>
@@ -278,7 +267,7 @@
         </div>
       </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">FEB 2024 — SEP 2025</div>
         <div class="t-content">
           <h3>Research Assistant</h3>
@@ -292,7 +281,7 @@
         </div>
       </div>
 
-      <div class="t-row elevated">
+      <div class="t-row elevated reveal">
         <div class="t-date">MAY 2024 — AUG 2024</div>
         <div class="t-content">
           <h3>Drone Research Intern</h3>
@@ -313,23 +302,23 @@
 <!-- ===================== PUBLICATIONS ===================== -->
 <section id="publications" class="section alt">
   <div class="section-inner">
-    <p class="eyebrow">Research Output</p>
-    <h2>Publications &amp; <em>Conferences</em></h2>
+    <p class="eyebrow"><span class="num">04</span>Research Output</p>
+    <div class="section-head"><h2>Publications &amp; <span class="grad-text">Conferences</span></h2></div>
 
     <div class="pub-list">
-      <div class="pub elevated">
+      <div class="pub elevated reveal">
         <span class="pub-tag">Accepted</span>
         <h3>Adaptive PID Control for Quadrotor UAVs Using Feedback Linearization and Deep Reinforcement Learning</h3>
-        <p class="pub-venue">International Conference on Smart Computing, Communication & Secure Technologies (ICSCCST)</p>
+        <p class="pub-venue">International Conference on Smart Computing, Communication &amp; Secure Technologies (ICSCCST)</p>
         <a href="https://drive.google.com/file/d/1gHAfwuKrkBEI2YgSbLGot4swJ3hK2aLz/view?usp=sharing" target="_blank" rel="noopener" class="pub-link">Read paper ↗</a>
       </div>
-      <div class="pub elevated">
+      <div class="pub elevated reveal">
         <span class="pub-tag">Presentation Done</span>
         <h3>Deep Reinforcement Learning Framework for Adaptive Control of Swing-up Inverted Pendulum</h3>
         <p class="pub-venue">5th International Conference on Emerging Electronics and Automation (ICEEA)</p>
         <a href="https://drive.google.com/drive/u/1/folders/1yU5gb-d-D4MZdCXlzVD_Qjbz4Jb59mCc" target="_blank" rel="noopener" class="pub-link">Read paper ↗</a>
       </div>
-      <div class="pub elevated">
+      <div class="pub elevated reveal">
         <span class="pub-tag">Published</span>
         <h3>Bio-Inspired Optimization of LQR Controllers for Feedback-Linearized Cruise Missiles</h3>
         <p class="pub-venue">9th International Conference on Inventive Systems and Control (ICISC)</p>
@@ -342,86 +331,98 @@
 <!-- ===================== PROJECTS ===================== -->
 <section id="projects" class="section">
   <div class="section-inner">
-    <p class="eyebrow">Selected Work</p>
-    <h2>Projects</h2>
+    <p class="eyebrow"><span class="num">05</span>Selected Work</p>
+    <div class="section-head"><h2>Projects</h2></div>
 
     <div class="project-grid">
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media">
           <img src="assets/images/projects/perception-pipeline.jpg" alt="MuJoCo simulation of the Franka Emika Panda arm performing perception-guided pick and place">
         </div>
-        <span class="project-tag">Active · Manipulation</span>
-        <h3>Perception &amp; Control Pipeline for Redundant Manipulators</h3>
-        <p>Implemented a 6-DOF Cartesian impedance controller for compliant manipulation, reaching 3.8 mm peak and 0.14 mm steady state tracking error. Built a two-camera 3D localization pipeline for the Franka Emika Panda in MuJoCo, achieving 1.4 mm position and 0.1 degree yaw accuracy without learned models. Closed the loop with a pick and place system combining wrist camera pose refinement, damped least squares IK, and contact triggered grasping, validated across 50 randomized trials with a 100% success rate.</p>
-        <div class="project-footer">
-          <span class="project-date">Jan 2026 — Present</span>
-          <a href="https://github.com/shreehank22/Bathsheba-Project-roboai" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+        <div class="project-body">
+          <span class="project-tag">Active · Manipulation</span>
+          <h3>Perception &amp; Control Pipeline for Redundant Manipulators</h3>
+          <p>Implemented a 6-DOF Cartesian impedance controller for compliant manipulation, reaching 3.8 mm peak and 0.14 mm steady state tracking error. Built a two-camera 3D localization pipeline for the Franka Emika Panda in MuJoCo, achieving 1.4 mm position and 0.1 degree yaw accuracy without learned models. Closed the loop with a pick and place system combining wrist camera pose refinement, damped least squares IK, and contact triggered grasping, validated across 50 randomized trials with a 100% success rate.</p>
+          <div class="project-footer">
+            <span class="project-date">Jan 2026 — Present</span>
+            <a href="https://github.com/shreehank22/Bathsheba-Project-roboai" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media">
           <img src="assets/images/projects/quadrotor-rl-block.jpg" alt="Block diagram of the TD3 agent tuning a PID controller with feedback linearization for the nonlinear quadrotor model">
         </div>
-        <span class="project-tag">Reinforcement Learning</span>
-        <h3>Adaptive Control of Quadrotor UAVs</h3>
-        <p>Trained TD3 and DDPG actor critic agents to dynamically tune controller gains, with a reward function shaped on LQG cost. Demonstrated disturbance rejection under external perturbations and reached 60% lower cumulative tracking error than fixed gain PID, LQR, and LMPC baselines.</p>
-        <div class="project-footer">
-          <span class="project-date">May 2025 — Aug 2025</span>
-          <a href="https://github.com/shreehank22/Adaptive-PID-Control-for-Quadrotor-UAVs-Using-Feedback-Linearization-and-Deep-Reinforcement-Learning" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+        <div class="project-body">
+          <span class="project-tag">Reinforcement Learning</span>
+          <h3>Adaptive Control of Quadrotor UAVs</h3>
+          <p>Trained TD3 and DDPG actor critic agents to dynamically tune controller gains, with a reward function shaped on LQG cost. Demonstrated disturbance rejection under external perturbations and reached 60% lower cumulative tracking error than fixed gain PID, LQR, and LMPC baselines.</p>
+          <div class="project-footer">
+            <span class="project-date">May 2025 — Aug 2025</span>
+            <a href="https://github.com/shreehank22/Adaptive-PID-Control-for-Quadrotor-UAVs-Using-Feedback-Linearization-and-Deep-Reinforcement-Learning" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media">
           <img src="assets/images/projects/missile-response.jpg" alt="System response plots for pitch rate, angle of attack, and tail deflection of the missile autopilot">
         </div>
-        <span class="project-tag">Nonlinear Control</span>
-        <h3>Fuzzy-Tuned LQR for Cruise Missile Autopilot</h3>
-        <p>Derived a quasi linearized fourth order inner loop model from a nonlinear longitudinal missile autopilot using feedback linearization. Designed a Mamdani Type 1 fuzzy inference system in MATLAB for online adaptation of LQR weights, improving autopilot robustness by 28.92% over offline tuning.</p>
-        <div class="project-footer">
-          <span class="project-date">Mar 2024 — Jun 2024</span>
-          <a href="https://github.com/shreehank22/Non-Linear-Control-of-Cruise-Missiles-using-Fuzzy-tuned-LQR" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+        <div class="project-body">
+          <span class="project-tag">Nonlinear Control</span>
+          <h3>Fuzzy-Tuned LQR for Cruise Missile Autopilot</h3>
+          <p>Derived a quasi linearized fourth order inner loop model from a nonlinear longitudinal missile autopilot using feedback linearization. Designed a Mamdani Type 1 fuzzy inference system in MATLAB for online adaptation of LQR weights, improving autopilot robustness by 28.92% over offline tuning.</p>
+          <div class="project-footer">
+            <span class="project-date">Mar 2024 — Jun 2024</span>
+            <a href="https://github.com/shreehank22/Non-Linear-Control-of-Cruise-Missiles-using-Fuzzy-tuned-LQR" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media">
           <img src="assets/images/projects/thesis-ik.jpg" alt="IK trajectory verification plots showing designed versus IK to FK tracking in X, Y, Z and position and rotation error">
         </div>
-        <span class="project-tag">Dynamics</span>
-        <h3>7-DOF Redundant Manipulator for Space Applications</h3>
-        <p>Built the kinematic model with the Craig DH convention and optimized link lengths with NSGA-II. Computed actuator torques with the Recursive Newton-Euler Algorithm at a 5 kg payload. Solved inverse kinematics with a damped least squares solver using adaptive Gaussian damping, reaching 100% convergence.</p>
-        <div class="project-footer">
-          <span class="project-date">Jan 2026 — May 2026</span>
-          <a href="https://drive.google.com/drive/folders/1gzyLUYvmrhKA6T528o8PsTUSKmRvN7Ny" target="_blank" rel="noopener" class="project-link">View materials ↗</a>
+        <div class="project-body">
+          <span class="project-tag">Dynamics</span>
+          <h3>7-DOF Redundant Manipulator for Space Applications</h3>
+          <p>Built the kinematic model with the Craig DH convention and optimized link lengths with NSGA-II. Computed actuator torques with the Recursive Newton-Euler Algorithm at a 5 kg payload. Solved inverse kinematics with a damped least squares solver using adaptive Gaussian damping, reaching 100% convergence.</p>
+          <div class="project-footer">
+            <span class="project-date">Jan 2026 — May 2026</span>
+            <a href="https://drive.google.com/drive/folders/1gzyLUYvmrhKA6T528o8PsTUSKmRvN7Ny" target="_blank" rel="noopener" class="project-link">View materials ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media">
           <img src="assets/images/projects/baja-atv.jpg" alt="All-terrain vehicle at mBAJA 2024 with the team's car in the foreground">
         </div>
-        <span class="project-tag">Vehicle Dynamics</span>
-        <h3>Suspension and Steering Design for an All-Terrain Vehicle</h3>
-        <p>Worked within a 15-member team on the conceptualization, analysis, and validation of the suspension and steering system for a 4WD all-terrain vehicle, from design through fabrication. Reduced front and rear track widths by 3.77% and 2.13% to improve off-road handling, contributing to a 19th place finish at mBAJA 2024, organized by SAE India.</p>
-        <div class="project-footer">
-          <span class="project-date">Aug 2023 — Aug 2024</span>
-          <a href="https://drive.google.com/drive/folders/17CXnU7jZgznq8QJulVP3CpMyddTyiUer?usp=drive_link" target="_blank" rel="noopener" class="project-link">View materials ↗</a>
+        <div class="project-body">
+          <span class="project-tag">Vehicle Dynamics</span>
+          <h3>Suspension and Steering Design for an All-Terrain Vehicle</h3>
+          <p>Worked within a 15-member team on the conceptualization, analysis, and validation of the suspension and steering system for a 4WD all-terrain vehicle, from design through fabrication. Reduced front and rear track widths by 3.77% and 2.13% to improve off-road handling, contributing to a 19th place finish at mBAJA 2024, organized by SAE India.</p>
+          <div class="project-footer">
+            <span class="project-date">Aug 2023 — Aug 2024</span>
+            <a href="https://drive.google.com/drive/folders/17CXnU7jZgznq8QJulVP3CpMyddTyiUer?usp=drive_link" target="_blank" rel="noopener" class="project-link">View materials ↗</a>
+          </div>
         </div>
       </div>
 
-      <div class="project-card elevated">
+      <div class="project-card elevated reveal">
         <div class="project-media split">
           <img src="assets/images/projects/sysid-tracking.jpg" alt="Closed-loop position tracking plot showing the desired and reference trajectories overlapping">
           <img src="assets/images/projects/sysid-block.jpg" alt="Simulink block diagram of the PID controller closing the loop around the identified state-space model">
         </div>
-        <span class="project-tag">System Identification</span>
-        <h3>System Identification and Control of a Mobile Robot</h3>
-        <p>Identified a discrete-time linear state-space model of a mobile robot's nonlinear dynamics with the N4SID algorithm, using recorded acceleration and control input data. Tuned a PID controller on the identified model with the Ziegler-Nichols method and validated closed-loop tracking and stability in Simulink.</p>
-        <div class="project-footer">
-          <span class="project-date">MATLAB &amp; Simulink</span>
-          <a href="https://github.com/shreehank22/System-Indentification-for-Mobile-Robot" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+        <div class="project-body">
+          <span class="project-tag">System Identification</span>
+          <h3>System Identification and Control of a Mobile Robot</h3>
+          <p>Identified a discrete-time linear state-space model of a mobile robot's nonlinear dynamics with the N4SID algorithm, using recorded acceleration and control input data. Tuned a PID controller on the identified model with the Ziegler-Nichols method and validated closed-loop tracking and stability in Simulink.</p>
+          <div class="project-footer">
+            <span class="project-date">MATLAB &amp; Simulink</span>
+            <a href="https://github.com/shreehank22/System-Indentification-for-Mobile-Robot" target="_blank" rel="noopener" class="project-link">View on GitHub ↗</a>
+          </div>
         </div>
       </div>
     </div>
@@ -431,30 +432,30 @@
 <!-- ===================== SKILLS ===================== -->
 <section id="skills" class="section alt">
   <div class="section-inner">
-    <p class="eyebrow">Toolset</p>
-    <h2>Skills</h2>
+    <p class="eyebrow"><span class="num">06</span>Toolset</p>
+    <div class="section-head"><h2>Skills</h2></div>
 
     <div class="skills-grid">
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h4>Robotics</h4>
         <div class="tags">
           <span>Manipulator Kinematics</span><span>Dynamics</span><span>Impedance Control</span>
           <span>Trajectory Planning</span><span>Singularity Analysis</span><span>Whole-Body Control</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h4>Coding</h4>
         <div class="tags">
           <span>MATLAB</span><span>Python</span><span>C++</span><span>ROS&nbsp;2</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h4>Frameworks</h4>
         <div class="tags">
           <span>PyTorch</span><span>OpenCV</span><span>NumPy</span><span>MuJoCo</span>
         </div>
       </div>
-      <div class="skill-group">
+      <div class="skill-group reveal">
         <h4>Engineering Software</h4>
         <div class="tags">
           <span>Simulink</span><span>Fusion&nbsp;360</span><span>AutoCAD</span><span>Gazebo</span>
@@ -466,21 +467,22 @@
 
 <!-- ===================== CONTACT ===================== -->
 <section id="contact" class="section contact-section">
+  <div class="contact-glow" aria-hidden="true"></div>
   <div class="section-inner">
-    <p class="eyebrow">Get in Touch</p>
-    <h2>Let's <em>Connect</em></h2>
+    <p class="eyebrow"><span class="num">07</span>Get in Touch</p>
+    <h2>Let's <span class="grad-text">Connect</span></h2>
     <p class="contact-desc">Reaching out about manipulation research, control systems, or WPI? Happy to talk. Best by email or LinkedIn.</p>
     <div class="contact-links">
-      <a href="mailto:shreehan1912@gmail.com" class="contact-btn">shreehan1912@gmail.com</a>
+      <a href="mailto:shreehan1912@gmail.com" class="contact-btn solid">shreehan1912@gmail.com</a>
       <a href="https://www.linkedin.com/in/shreehankate" target="_blank" rel="noopener" class="contact-btn outline">LinkedIn ↗</a>
     </div>
   </div>
 </section>
 
 <footer>
-  <div class="section-inner footer-inner">
+  <div class="footer-inner">
     <span>© 2026 Shreehan Santosh Kate</span>
-    <span class="footer-curve">⌁ settling, not by accident</span>
+    <span>⌁ settling, not by accident</span>
   </div>
 </footer>
 
